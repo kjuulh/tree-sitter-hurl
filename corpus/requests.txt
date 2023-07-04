@@ -8,10 +8,11 @@ GET https://somewhere.com
 
 (source_file
   (request_declaration
-    (request_literal)))
+     (request_literal)
+        (url)))
 
 ===
-GET request
+POST request
 ===
 
 POST https://somewhere.com?query=something
@@ -20,4 +21,74 @@ POST https://somewhere.com?query=something
 
 (source_file
   (request_declaration
-    (request_literal)))
+     (request_literal)
+        (url)))
+
+===
+Headers
+===
+
+POST https://somewhere.com?query=something
+some: header
+
+---
+
+(source_file
+  (request_declaration
+     (request_literal)
+       (url))
+     (header_declaration
+       (header_name)
+       (header_value)))
+
+===
+More Headers
+===
+
+POST https://somewhere.com?query=something
+some: header
+A123a-123: someA asdfasdf asdf c123
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+      (url))
+      (header_declaration
+        (header_name)
+        (header_value)))
+
+===
+HTTP Status codes 200
+===
+
+POST https://somewhere.com?query=something
+
+HTTP 200
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+      (url))
+      (response
+        (scheme_literal)
+        (status_code_pattern)))
+
+===
+HTTP Status codes 302
+===
+
+POST https://somewhere.com?query=something
+
+HTTP 302
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+      (url))
+      (response
+        (scheme_literal)
+        (status_code_pattern)))

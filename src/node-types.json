@@ -1,8 +1,45 @@
 [
   {
+    "type": "header_declaration",
+    "named": true,
+    "fields": {
+      "header_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "header_name",
+            "named": true
+          }
+        ]
+      },
+      "header_value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "header_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "request_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "url": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "url",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
@@ -20,6 +57,25 @@
     "fields": {}
   },
   {
+    "type": "response",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "scheme_literal",
+          "named": true
+        },
+        {
+          "type": "status_code_pattern",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -28,11 +84,23 @@
       "required": false,
       "types": [
         {
+          "type": "header_declaration",
+          "named": true
+        },
+        {
           "type": "request_declaration",
+          "named": true
+        },
+        {
+          "type": "response",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": ":",
+    "named": false
   },
   {
     "type": "CONNECT",
@@ -93,5 +161,25 @@
   {
     "type": "VIEW",
     "named": false
+  },
+  {
+    "type": "header_name",
+    "named": true
+  },
+  {
+    "type": "header_value",
+    "named": true
+  },
+  {
+    "type": "scheme_literal",
+    "named": true
+  },
+  {
+    "type": "status_code_pattern",
+    "named": true
+  },
+  {
+    "type": "url",
+    "named": true
   }
 ]

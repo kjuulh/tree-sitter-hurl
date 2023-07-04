@@ -23,6 +23,19 @@
         {
           "type": "SYMBOL",
           "name": "request_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "header_declaration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "http_response_declaration"
+          },
+          "named": true,
+          "value": "response"
         }
       ]
     },
@@ -38,8 +51,50 @@
           "name": "url",
           "content": {
             "type": "SYMBOL",
-            "name": "_url"
+            "name": "url"
           }
+        }
+      ]
+    },
+    "header_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "header_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "header_name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "header_value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "header_value"
+          }
+        }
+      ]
+    },
+    "http_response_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "scheme_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_space_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "status_code_pattern"
         }
       ]
     },
@@ -117,7 +172,27 @@
         }
       ]
     },
-    "_url": {
+    "scheme_literal": {
+      "type": "STRING",
+      "value": "HTTP"
+    },
+    "_space_literal": {
+      "type": "STRING",
+      "value": " "
+    },
+    "status_code_pattern": {
+      "type": "PATTERN",
+      "value": "[\\d]{3}"
+    },
+    "header_name": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z-_0-9]+"
+    },
+    "header_value": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z-_0-9\\s:;\\.,\\\\\\/\\\"\\'\\?\\!\\(\\)\\{\\}\\[\\]@<>=\\-\\+\\*\\#\\$\\&`|~^%]+"
+    },
+    "url": {
       "type": "PATTERN",
       "value": "\\S+"
     }
