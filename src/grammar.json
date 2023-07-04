@@ -90,10 +90,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_space_literal"
-        },
-        {
-          "type": "SYMBOL",
           "name": "status_code_pattern"
         }
       ]
@@ -176,9 +172,16 @@
       "type": "STRING",
       "value": "HTTP"
     },
-    "_space_literal": {
-      "type": "STRING",
-      "value": " "
+    "comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -10,
+        "content": {
+          "type": "PATTERN",
+          "value": "#.*"
+        }
+      }
     },
     "status_code_pattern": {
       "type": "PATTERN",
@@ -190,7 +193,7 @@
     },
     "header_value": {
       "type": "PATTERN",
-      "value": "[a-zA-Z-_0-9\\s:;\\.,\\\\\\/\\\"\\'\\?\\!\\(\\)\\{\\}\\[\\]@<>=\\-\\+\\*\\#\\$\\&`|~^%]+"
+      "value": "[a-zA-Z\\-_0-9\\/\\\\]+"
     },
     "url": {
       "type": "PATTERN",
@@ -198,6 +201,10 @@
     }
   },
   "extras": [
+    {
+      "type": "SYMBOL",
+      "name": "comment"
+    },
     {
       "type": "PATTERN",
       "value": "\\s"

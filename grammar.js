@@ -1,6 +1,11 @@
 module.exports = grammar({
   name: "hurl",
 
+  extras: $ => [
+    $.comment,
+    /\s/
+  ],
+
   rules: {
     source_file: ($) => repeat($._statement),
 
@@ -28,7 +33,7 @@ module.exports = grammar({
         field("header_value", $.header_value)
       ),
 
-    http_response_declaration: $ => seq($.scheme_literal, $._space_literal, $.status_code_pattern),
+    http_response_declaration: $ => seq($.scheme_literal, $.status_code_pattern),
 
     // literals
 
@@ -55,14 +60,15 @@ module.exports = grammar({
 
     scheme_literal: $ => "HTTP",
 
-    _space_literal: $ => " ",
-
     // patterns
+
+    comment: $ => token(prec(-10, /#.*/)),
+
 
     status_code_pattern: $ => /[\d]{3}/,
     header_name: ($) => /[a-zA-Z-_0-9]+/,
     header_value: ($) =>
-      /[a-zA-Z-_0-9\s:;\.,\\\/\"\'\?\!\(\)\{\}\[\]@<>=\-\+\*\#\$\&`|~^%]+/,
+      /[a-zA-Z\-_0-9\/\\]+/,
 
     url: ($) => /\S+/,
   },

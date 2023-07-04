@@ -163,6 +163,10 @@
     "named": false
   },
   {
+    "type": "comment",
+    "named": true
+  },
+  {
     "type": "header_name",
     "named": true
   },

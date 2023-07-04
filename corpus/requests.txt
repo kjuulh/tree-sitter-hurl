@@ -47,7 +47,7 @@ More Headers
 
 POST https://somewhere.com?query=something
 some: header
-A123a-123: someA asdfasdf asdf c123
+A123a-123: someAasdfasdfasdfc123
 
 ---
 
@@ -55,9 +55,13 @@ A123a-123: someA asdfasdf asdf c123
   (request_declaration
     (request_literal)
       (url))
-      (header_declaration
-        (header_name)
-        (header_value)))
+  (header_declaration
+    (header_name)
+    (header_value))
+  (header_declaration
+    (header_name)
+    (header_value))
+  )
 
 ===
 HTTP Status codes 200
@@ -92,3 +96,23 @@ HTTP 302
       (response
         (scheme_literal)
         (status_code_pattern)))
+
+===
+HTTP Status codes 302
+===
+
+POST https://somewhere.com?query=something
+Header: something
+HTTP 302
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+    (url))
+  (header_declaration
+    (header_name)
+    (header_value))
+  (response
+    (scheme_literal)
+    (status_code_pattern)))
