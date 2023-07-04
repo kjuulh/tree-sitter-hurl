@@ -14,6 +14,8 @@ const PREC = {
 module.exports = grammar({
   name: "hurl",
 
+  word: $ => $.identifier,
+
   extras: $ => [
     $.comment,
   ],
@@ -45,10 +47,12 @@ module.exports = grammar({
       ),
 
     request_body_declaration: $ => choice(
-      $.json_request_declaration
+      $.json_request_declaration,
+      $.text_body_declaration
     ),
 
     json_request_declaration: $ => prec.left(PREC.body, seq(/\{/, optional(repeat(choice(/\n/))), repeat(seq($._line, NL)), /\}\n\n/)),
+    text_body_declaration: $ => prec.left(PREC.body, seq(/```/, optional(repeat(choice(/\n/))), repeat(seq($._line, NL)), /```\n\n/)),
 
 
     header_declaration: ($) =>
@@ -67,7 +71,7 @@ module.exports = grammar({
 
     _literal: ($) => choice($.request_literal, $.assert_literal),
 
-    request_literal: (_$) =>
+    request_literal: ($) =>
       choice(
         "GET",
         "POST",
@@ -83,7 +87,8 @@ module.exports = grammar({
         "LOCK",
         "UNLOCK",
         "PROPFIND",
-        "VIEW"
+        "VIEW",
+        $.const_pattern
       ),
 
 
@@ -101,8 +106,7 @@ module.exports = grammar({
 
     // patterns
 
-    //comment: _ => prec.left(PREC.comment, token(seq("#", /.*/, optional(NL)))),
-    //comment_raw: _ => token(seq("#", /.*/, optional(NL))),
+    const_pattern: $ => /[A-Z_0-9\/\\\d]+/,
     comment: _ => prec.left(PREC.comment, token(seq("#", /.*/, NL))),
     status_code_pattern: $ => /[\d]{3}/,
     header_name: ($) => /[a-zA-Z-_0-9]+/,
@@ -111,6 +115,7 @@ module.exports = grammar({
 
     url: ($) => /\S+/,
     _line: _ => /[^\n]+/,
+    identifier: _ => /[A-Za-z_.\d\u00A1-\uFFFF-]+/,
     _whitespace: _ => repeat1(/[\t\v ]/),
   },
 });

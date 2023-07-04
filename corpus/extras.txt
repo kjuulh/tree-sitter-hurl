@@ -20,3 +20,21 @@ HTTP 200
     (scheme_literal)
     (status_code_pattern))
   (comment))
+
+===
+Identifier
+===
+SOMETHING
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+    (url))
+  (comment)
+  (comment)
+  (response
+    (scheme_literal)
+    (status_code_pattern))
+  (comment))

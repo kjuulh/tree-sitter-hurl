@@ -140,3 +140,53 @@ HTTP 302
   (response
     (scheme_literal)
     (status_code_pattern)))
+
+===
+Request text body
+===
+
+POST https://somewhere.com?query=something
+```
+{
+  "some-name": "some-value"
+}
+```
+
+HTTP 302
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+    (url))
+  (body
+    (text_body_declaration))
+  (response
+    (scheme_literal)
+    (status_code_pattern)))
+
+===
+Request text body json
+===
+
+POST https://somewhere.com?query=something
+```json
+{
+  "some-name": "some-value"
+}
+```
+
+HTTP 302
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+    (url))
+  (body
+    (text_body_declaration))
+  (response
+    (scheme_literal)
+    (status_code_pattern)))

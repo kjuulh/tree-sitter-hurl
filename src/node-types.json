@@ -30,6 +30,10 @@
         {
           "type": "json_request_declaration",
           "named": true
+        },
+        {
+          "type": "text_body_declaration",
+          "named": true
         }
       ]
     }
@@ -103,7 +107,17 @@
   {
     "type": "request_literal",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "const_pattern",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "response",
@@ -154,6 +168,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "text_body_declaration",
+    "named": true,
+    "fields": {}
   },
   {
     "type": ":",
@@ -254,6 +273,10 @@
   {
     "type": "]",
     "named": false
+  },
+  {
+    "type": "const_pattern",
+    "named": true
   },
   {
     "type": "header_name",

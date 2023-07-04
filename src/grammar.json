@@ -1,5 +1,6 @@
 {
   "name": "hurl",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -111,6 +112,10 @@
         {
           "type": "SYMBOL",
           "name": "json_request_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "text_body_declaration"
         }
       ]
     },
@@ -166,6 +171,62 @@
           {
             "type": "PATTERN",
             "value": "\\}\\n\\n"
+          }
+        ]
+      }
+    },
+    "text_body_declaration": {
+      "type": "PREC_LEFT",
+      "value": 5,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "```"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "\\n"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_line"
+                },
+                {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[\\r\\n]+"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "PATTERN",
+            "value": "```\\n\\n"
           }
         ]
       }
@@ -316,6 +377,10 @@
         {
           "type": "STRING",
           "value": "VIEW"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_pattern"
         }
       ]
     },
@@ -355,6 +420,10 @@
     "scheme_literal": {
       "type": "STRING",
       "value": "HTTP"
+    },
+    "const_pattern": {
+      "type": "PATTERN",
+      "value": "[A-Z_0-9\\/\\\\\\d]+"
     },
     "comment": {
       "type": "PREC_LEFT",
@@ -402,6 +471,10 @@
     "_line": {
       "type": "PATTERN",
       "value": "[^\\n]+"
+    },
+    "identifier": {
+      "type": "PATTERN",
+      "value": "[A-Za-z_.\\d\\u00A1-\\uFFFF-]+"
     },
     "_whitespace": {
       "type": "REPEAT1",
