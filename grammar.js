@@ -1,9 +1,21 @@
+const NL = token.immediate(/[\r\n]+/);
+
+const PREC = {
+  comment: 1,
+  request: 2,
+  header: 3,
+  param: 4,
+  body: 5,
+  var: 6,
+  whitespace: 7,
+  new_line: 8,
+}
+
 module.exports = grammar({
   name: "hurl",
 
   extras: $ => [
     $.comment,
-    /\s/
   ],
 
   rules: {
@@ -12,32 +24,48 @@ module.exports = grammar({
     // statements
 
     _statement: ($) =>
-      choice($._declaration_statement),
+      choice($._declaration_statement, NL),
 
-    _declaration_statement: ($) =>
+    _declaration_statement: ($) => seq(
       choice(
         $.request_declaration,
         $.header_declaration,
         alias($.http_response_declaration, $.response),
+        $.assert_declaration,
+        alias($.request_body_declaration, $.body),
       ),
+      prec.left(PREC.whitespace, optional($._whitespace)),
+    ),
 
     // declarations
 
     request_declaration: ($) =>
-      seq($._literal, field("url", $.url)),
+      prec.left(PREC.request,
+        seq($._literal, $._whitespace, field("url", $.url)),
+      ),
+
+    request_body_declaration: $ => choice(
+      $.json_request_declaration
+    ),
+
+    json_request_declaration: $ => prec.left(PREC.body, seq(/\{/, optional(repeat(choice(/\n/))), repeat(seq($._line, NL)), /\}\n\n/)),
+
 
     header_declaration: ($) =>
       seq(
         field("header_name", $.header_name),
         ":",
+        optional($._whitespace),
         field("header_value", $.header_value)
       ),
 
-    http_response_declaration: $ => seq($.scheme_literal, $.status_code_pattern),
+    http_response_declaration: $ => seq($.scheme_literal, $._whitespace, $.status_code_pattern),
+
+    assert_declaration: $ => seq('[', $.assert_literal, ']'),
 
     // literals
 
-    _literal: ($) => choice($.request_literal),
+    _literal: ($) => choice($.request_literal, $.assert_literal),
 
     request_literal: (_$) =>
       choice(
@@ -58,18 +86,31 @@ module.exports = grammar({
         "VIEW"
       ),
 
+
+    assert_literal: $ => choice(
+      "QueryStringParams",
+      "FormParams",
+      "MultipartFormData",
+      "Cookies",
+      "Captures",
+      "Asserts",
+      "Options",
+    ),
+
     scheme_literal: $ => "HTTP",
 
     // patterns
 
-    comment: $ => token(prec(-10, /#.*/)),
-
-
+    //comment: _ => prec.left(PREC.comment, token(seq("#", /.*/, optional(NL)))),
+    //comment_raw: _ => token(seq("#", /.*/, optional(NL))),
+    comment: _ => prec.left(PREC.comment, token(seq("#", /.*/, NL))),
     status_code_pattern: $ => /[\d]{3}/,
     header_name: ($) => /[a-zA-Z-_0-9]+/,
     header_value: ($) =>
       /[a-zA-Z\-_0-9\/\\]+/,
 
     url: ($) => /\S+/,
+    _line: _ => /[^\n]+/,
+    _whitespace: _ => repeat1(/[\t\v ]/),
   },
 });

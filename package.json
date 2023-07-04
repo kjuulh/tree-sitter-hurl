@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nan": "^2.17.0"
+    "nan": "^2.17.0",
+    "tree-sitter-json": "^0.20.0"
   },
   "devDependencies": {
     "prettier": "^2.8.8",

@@ -1,0 +1,20 @@
+===
+Assertion
+===
+GET https://somewhere.com
+
+HTTP 200
+[Asserts]
+
+---
+
+(source_file
+  (request_declaration
+     (request_literal)
+     (url))
+  (response
+    (scheme_literal)
+    (status_code_pattern))
+  (assert_declaration
+    (assert_literal)))
+

@@ -1,21 +1,22 @@
 ===
 Comments
 ===
-
-GET https://somewhere.com # some comment
+GET https://somewhere.com  # some comment
 # comment
 
-HTTP 200 # comment
+HTTP 200
+
+# comment
 
 ---
 
 (source_file
   (request_declaration
-     (request_literal)
-        (url))
-      (comment)
-      (comment)
-      (response
-        (scheme_literal)
-        (status_code_pattern))
-      (comment))
+    (request_literal)
+    (url))
+  (comment)
+  (comment)
+  (response
+    (scheme_literal)
+    (status_code_pattern))
+  (comment))

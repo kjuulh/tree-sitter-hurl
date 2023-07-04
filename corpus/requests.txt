@@ -116,3 +116,27 @@ HTTP 302
   (response
     (scheme_literal)
     (status_code_pattern)))
+
+
+===
+Request body json
+===
+
+POST https://somewhere.com?query=something
+{
+  "some-name": "some-value"
+}
+
+HTTP 302
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)
+    (url))
+  (body
+    (json_request_declaration))
+  (response
+    (scheme_literal)
+    (status_code_pattern)))

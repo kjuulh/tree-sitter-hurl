@@ -14,47 +14,161 @@
         {
           "type": "SYMBOL",
           "name": "_declaration_statement"
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[\\r\\n]+"
+          }
         }
       ]
     },
     "_declaration_statement": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "request_declaration"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "request_declaration"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "header_declaration"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "http_response_declaration"
+              },
+              "named": true,
+              "value": "response"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "assert_declaration"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "request_body_declaration"
+              },
+              "named": true,
+              "value": "body"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "header_declaration"
-        },
-        {
-          "type": "ALIAS",
+          "type": "PREC_LEFT",
+          "value": 7,
           "content": {
-            "type": "SYMBOL",
-            "name": "http_response_declaration"
-          },
-          "named": true,
-          "value": "response"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_whitespace"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
         }
       ]
     },
     "request_declaration": {
-      "type": "SEQ",
+      "type": "PREC_LEFT",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_literal"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_whitespace"
+          },
+          {
+            "type": "FIELD",
+            "name": "url",
+            "content": {
+              "type": "SYMBOL",
+              "name": "url"
+            }
+          }
+        ]
+      }
+    },
+    "request_body_declaration": {
+      "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_literal"
-        },
-        {
-          "type": "FIELD",
-          "name": "url",
-          "content": {
-            "type": "SYMBOL",
-            "name": "url"
-          }
+          "name": "json_request_declaration"
         }
       ]
+    },
+    "json_request_declaration": {
+      "type": "PREC_LEFT",
+      "value": 5,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "\\{"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "\\n"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_line"
+                },
+                {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[\\r\\n]+"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\}\\n\\n"
+          }
+        ]
+      }
     },
     "header_declaration": {
       "type": "SEQ",
@@ -70,6 +184,18 @@
         {
           "type": "STRING",
           "value": ":"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_whitespace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -90,7 +216,28 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_whitespace"
+        },
+        {
+          "type": "SYMBOL",
           "name": "status_code_pattern"
+        }
+      ]
+    },
+    "assert_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assert_literal"
+        },
+        {
+          "type": "STRING",
+          "value": "]"
         }
       ]
     },
@@ -100,6 +247,10 @@
         {
           "type": "SYMBOL",
           "name": "request_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assert_literal"
         }
       ]
     },
@@ -168,18 +319,67 @@
         }
       ]
     },
+    "assert_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "QueryStringParams"
+        },
+        {
+          "type": "STRING",
+          "value": "FormParams"
+        },
+        {
+          "type": "STRING",
+          "value": "MultipartFormData"
+        },
+        {
+          "type": "STRING",
+          "value": "Cookies"
+        },
+        {
+          "type": "STRING",
+          "value": "Captures"
+        },
+        {
+          "type": "STRING",
+          "value": "Asserts"
+        },
+        {
+          "type": "STRING",
+          "value": "Options"
+        }
+      ]
+    },
     "scheme_literal": {
       "type": "STRING",
       "value": "HTTP"
     },
     "comment": {
-      "type": "TOKEN",
+      "type": "PREC_LEFT",
+      "value": 1,
       "content": {
-        "type": "PREC",
-        "value": -10,
+        "type": "TOKEN",
         "content": {
-          "type": "PATTERN",
-          "value": "#.*"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "PATTERN",
+              "value": ".*"
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[\\r\\n]+"
+              }
+            }
+          ]
         }
       }
     },
@@ -198,16 +398,23 @@
     "url": {
       "type": "PATTERN",
       "value": "\\S+"
+    },
+    "_line": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
+    },
+    "_whitespace": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\t\\v ]"
+      }
     }
   },
   "extras": [
     {
       "type": "SYMBOL",
       "name": "comment"
-    },
-    {
-      "type": "PATTERN",
-      "value": "\\s"
     }
   ],
   "conflicts": [],

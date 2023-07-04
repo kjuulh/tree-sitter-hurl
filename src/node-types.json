@@ -1,5 +1,45 @@
 [
   {
+    "type": "assert_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assert_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assert_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "json_request_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "header_declaration",
     "named": true,
     "fields": {
@@ -26,6 +66,11 @@
     }
   },
   {
+    "type": "json_request_declaration",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "request_declaration",
     "named": true,
     "fields": {
@@ -44,6 +89,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "assert_literal",
+          "named": true
+        },
         {
           "type": "request_literal",
           "named": true
@@ -84,6 +133,14 @@
       "required": false,
       "types": [
         {
+          "type": "assert_declaration",
+          "named": true
+        },
+        {
+          "type": "body",
+          "named": true
+        },
+        {
           "type": "header_declaration",
           "named": true
         },
@@ -103,11 +160,27 @@
     "named": false
   },
   {
+    "type": "Asserts",
+    "named": false
+  },
+  {
     "type": "CONNECT",
     "named": false
   },
   {
+    "type": "Captures",
+    "named": false
+  },
+  {
+    "type": "Cookies",
+    "named": false
+  },
+  {
     "type": "DELETE",
+    "named": false
+  },
+  {
+    "type": "FormParams",
     "named": false
   },
   {
@@ -123,7 +196,15 @@
     "named": false
   },
   {
+    "type": "MultipartFormData",
+    "named": false
+  },
+  {
     "type": "OPTIONS",
+    "named": false
+  },
+  {
+    "type": "Options",
     "named": false
   },
   {
@@ -147,6 +228,10 @@
     "named": false
   },
   {
+    "type": "QueryStringParams",
+    "named": false
+  },
+  {
     "type": "TRACE",
     "named": false
   },
@@ -163,8 +248,12 @@
     "named": false
   },
   {
-    "type": "comment",
-    "named": true
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
   },
   {
     "type": "header_name",
