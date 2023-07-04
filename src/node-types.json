@@ -1,0 +1,97 @@
+[
+  {
+    "type": "request_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "request_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "request_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "request_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CONNECT",
+    "named": false
+  },
+  {
+    "type": "DELETE",
+    "named": false
+  },
+  {
+    "type": "GET",
+    "named": false
+  },
+  {
+    "type": "LINK",
+    "named": false
+  },
+  {
+    "type": "LOCK",
+    "named": false
+  },
+  {
+    "type": "OPTIONS",
+    "named": false
+  },
+  {
+    "type": "PATCH",
+    "named": false
+  },
+  {
+    "type": "POST",
+    "named": false
+  },
+  {
+    "type": "PROPFIND",
+    "named": false
+  },
+  {
+    "type": "PURGE",
+    "named": false
+  },
+  {
+    "type": "PUT",
+    "named": false
+  },
+  {
+    "type": "TRACE",
+    "named": false
+  },
+  {
+    "type": "UNLINK",
+    "named": false
+  },
+  {
+    "type": "UNLOCK",
+    "named": false
+  },
+  {
+    "type": "VIEW",
+    "named": false
+  }
+]

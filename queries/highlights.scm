@@ -1,0 +1,17 @@
+[
+        "GET"
+        "POST"
+        "PUT"
+        "DELETE"
+        "CONNECT"
+        "OPTIONS"
+        "TRACE"
+        "PATCH"
+        "LINK"
+        "UNLINK"
+        "PURGE"
+        "LOCK"
+        "UNLOCK"
+        "PROPFIND"
+        "VIEW"
+ ] @keyword

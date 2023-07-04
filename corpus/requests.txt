@@ -1,0 +1,23 @@
+===
+GET request
+===
+
+GET https://somewhere.com
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)))
+
+===
+GET request
+===
+
+POST https://somewhere.com?query=something
+
+---
+
+(source_file
+  (request_declaration
+    (request_literal)))
