@@ -28,12 +28,12 @@ completion.
    git clone https://github.com/kjuulh/tree-sitter-hurl.git
    ```
 
-2. Navigate to the project directory:
+2. Navigate to the repo:
    ```
    cd tree-sitter-hurl
    ```
 
-3. Install the required Node.js dependencies:
+3. Install the required dependencies:
    ```
    npm install
    ```
